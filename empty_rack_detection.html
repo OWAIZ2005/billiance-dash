@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Empty Rack Detection</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'League Spartan', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.37);
+            border-radius: 12px;
+            margin: 20px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .chart-container {
+            width: 80%;
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.37);
+            margin-bottom: 30px;
+            height: 400px;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">Billiance</div>
+    </div>
+
+    <h2>📊 Empty Rack Detection - Monthly Analysis</h2>
+    <div class="chart-container">
+        <canvas id="emptyRackChart"></canvas>
+    </div>
+
+    <h2>🔥 Highest Sold Product Each Month (More Sales = More Empty Racks)</h2>
+    <div class="chart-container">
+        <canvas id="highestSoldChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const labels = ['January', 'February', 'March', 'April', 'May', 'June'];
+            const productNames = ['Apples', 'Sunflower Oil', 'Baby Toys'];
+            
+            const salesData = {
+                Apples: [30, 45, 25, 50, 40, 35],
+                SunflowerOil: [40, 30, 50, 45, 35, 25],
+                BabyToys: [20, 35, 40, 30, 50, 45]
+            };
+
+            const ctx1 = document.getElementById('emptyRackChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Apples', data: salesData.Apples, backgroundColor: '#ec4899', borderRadius: 6 },
+                        { label: 'Sunflower Oil', data: salesData.SunflowerOil, backgroundColor: '#302b63', borderRadius: 6 },
+                        { label: 'Baby Toys', data: salesData.BabyToys, backgroundColor: '#db2777', borderRadius: 6 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#ffffff', font: { size: 14 } } },
+                        x: { ticks: { color: '#ffffff', font: { size: 14 } } }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#ffffff', font: { size: 14 } } }
+                    }
+                }
+            });
+
+            const highestSold = labels.map((month, i) => {
+                const sales = [salesData.Apples[i], salesData.SunflowerOil[i], salesData.BabyToys[i]];
+                const maxSale = Math.max(...sales);
+                const productIndex = sales.indexOf(maxSale);
+                return { label: `${month} - ${productNames[productIndex]}`, value: maxSale };
+            });
+
+            const ctx2 = document.getElementById('highestSoldChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: highestSold.map(item => item.label),
+                    datasets: [{
+                        label: 'Highest Sold Product (More Sales = More Empty Racks)',
+                        data: highestSold.map(item => item.value),
+                        backgroundColor: '#ff9f00',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { beginAtZero: true, ticks: { color: '#ffffff', font: { size: 14 } } },
+                        y: { ticks: { color: '#ffffff', font: { size: 14 } } }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#ffffff', font: { size: 14 } } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

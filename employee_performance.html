@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Employee Performance Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.37);
+            border-radius: 12px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.37);
+        }
+
+        .employee-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .employee-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .employee-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid white;
+        }
+
+        .chart-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            margin-top: 10px;
+            padding: 12px 20px;
+            background: #ec4899;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .back-btn:hover {
+            background: #db2777;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Employee Performance Dashboard</h1>
+    </div>
+
+    <div class="container" id="main-page">
+        <h2>Employee Performance Dashboard</h2>
+        <div class="employee-card" onclick="showDetails('A')">
+            <img src="image7.jpg" alt="Employee A">
+            <span>Employee A - Score: 85%</span>
+        </div>
+        <div class="employee-card" onclick="showDetails('B')">
+            <img src="image8.jpg" alt="Employee B">
+            <span>Employee B - Score: 78%</span>
+        </div>
+        <div class="employee-card" onclick="showDetails('C')">
+            <img src="image9.jpg" alt="Employee C">
+            <span>Employee C - Score: 90%</span>
+        </div>
+        <div class="chart-container">
+            <canvas id="performanceChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="container" id="details-page" style="display:none;">
+        <h2 id="employee-name"></h2>
+        <canvas id="taskChart"></canvas>
+        <button class="back-btn" onclick="goBack()">Back to Dashboard</button>
+    </div>
+
+    <script>
+        const performanceData = {
+            'A': { "Cleaning the Aisles": 20, "Arranging Products on Shelves": 15, "Housekeeping": 10, "Maintaining Stock Levels": 18 },
+            'B': { "Cleaning the Aisles": 12, "Arranging Products on Shelves": 18, "Housekeeping": 14, "Maintaining Stock Levels": 20 },
+            'C': { "Cleaning the Aisles": 25, "Arranging Products on Shelves": 10, "Housekeeping": 22, "Maintaining Stock Levels": 15 }
+        };
+
+        function showDetails(employee) {
+            document.getElementById("main-page").style.display = "none";
+            document.getElementById("details-page").style.display = "block";
+            document.getElementById("employee-name").textContent = "Performance of Employee " + employee;
+            generateTaskChart(employee);
+        }
+
+        function goBack() {
+            document.getElementById("details-page").style.display = "none";
+            document.getElementById("main-page").style.display = "block";
+        }
+
+        function generateTaskChart(employee) {
+            let ctx = document.getElementById("taskChart").getContext("2d");
+            if (window.taskChartInstance) {
+                window.taskChartInstance.destroy();
+            }
+            window.taskChartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: Object.keys(performanceData[employee]),
+                    datasets: [{
+                        label: "Tasks Completed",
+                        data: Object.values(performanceData[employee]),
+                        backgroundColor: "#007bff",
+                        borderColor: "#0056b3",
+                        borderWidth: 1
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    scales: { y: { beginAtZero: true, max: 30 } }
+                }
+            });
+        }
+
+        const ctx = document.getElementById("performanceChart").getContext("2d");
+        new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: ["Employee A", "Employee B", "Employee C"],
+                datasets: [{
+                    data: [85, 78, 90],
+                    backgroundColor: ["#007bff", "#28a745", "#ff9900"]
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
+</body>
+</html>

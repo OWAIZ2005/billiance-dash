@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billiance - Home</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <style>
+    body {
+      font-family: 'League Spartan', sans-serif;
+      background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      scroll-behavior: smooth;
+    }
+
+    .glass {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    .card-hover:hover {
+      transform: scale(1.03);
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="w-full px-8 py-6 flex justify-between items-center backdrop-blur-md bg-white/10 fixed top-0 z-50">
+    <h1 class="text-4xl font-extrabold text-white tracking-wide">Billiance</h1>
+    <nav class="hidden md:flex gap-6 text-lg">
+        <a href="#products" class="text-xl hover:text-pink-400">Products</a>
+        <a href="#features" class="text-xl hover:text-pink-400">Explore</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="h-[90vh] flex flex-col justify-center items-center text-center px-6 pt-24">
+    <lottie-player 
+      src="https://lottie.host/d25da06a-0082-46a6-90d3-bf7207a92df8/xEEuw9LxUO.json"
+      background="transparent" 
+      speed="1" 
+      style="width: 300px; height: 300px;" 
+      loop 
+      autoplay>
+    </lottie-player>
+    <div class="flex flex-col items-center text-center mt-6">
+      <h2 class="text-5xl font-bold">Elevating Retail with AI</h2>
+      <p class="text-lg text-gray-300 mt-2 max-w-xl">
+        Intelligent systems to revolutionize how stores manage, recommend, and track—bringing the future of retail today.
+      </p>
+      <a href="#features" class="mt-6 px-6 py-3 bg-pink-500 text-white font-semibold rounded-full hover:bg-pink-600 transition-all">
+        Explore Now
+      </a>
+    </div>
+  </section>
+
+  <!-- Top Products -->
+  <section id="products" class="py-20 px-6 bg-white text-gray-900">
+    <h2 class="text-4xl font-bold text-center mb-12">Top Selling Products of the Month</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+      <div class="glass card-hover max-w-xs p-4 text-white text-center">
+        <img src="image1.jpg" class="rounded-lg mb-3" alt="Product 1">
+        <h3 class="font-semibold text-xl">Product 1</h3>
+      </div>
+      <div class="glass card-hover max-w-xs p-4 text-white text-center">
+        <img src="image2.jpg" class="rounded-lg mb-3" alt="Product 2">
+        <h3 class="font-semibold text-xl">Product 2</h3>
+      </div>
+      <div class="glass card-hover max-w-xs p-4 text-white text-center">
+        <img src="image3.jpg" class="rounded-lg mb-3" alt="Product 3">
+        <h3 class="font-semibold text-xl">Product 3</h3>
+      </div>
+      <div class="glass card-hover max-w-xs p-4 text-white text-center">
+        <img src="image4.jpg" class="rounded-lg mb-3" alt="Product 4">
+        <h3 class="font-semibold text-xl">Product 4</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 px-6 bg-gradient-to-b from-indigo-900 to-purple-900">
+    <h2 class="text-4xl font-bold text-center mb-12">Explore AI Features</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+      <div class="glass card-hover p-6 cursor-pointer hover:bg-white hover:text-black transition" onclick="location.href='shoplifting.html'">
+        <h3 class="text-2xl font-bold mb-2">🕵 Shoplifting Detection</h3>
+        <p>Detects suspicious behavior and alerts instantly using live feeds + AI motion tracking.</p>
+      </div>
+      <div class="glass card-hover p-6 cursor-pointer hover:bg-white hover:text-black transition" onclick="location.href='empty_rack_detection.html'">
+        <h3 class="text-2xl font-bold mb-2">🪞 Empty Rack Detection</h3>
+        <p>Never miss a sale—monitor racks and send instant restock alerts.</p>
+      </div>
+      <div class="glass card-hover p-6 cursor-pointer hover:bg-white hover:text-black transition" onclick="location.href='personal_recomendation.html'">
+        <h3 class="text-2xl font-bold mb-2">🧠 Personalized Recommendations</h3>
+        <p>Boost customer satisfaction with AI-powered, behavior-based suggestions.</p>
+      </div>
+      <div class="glass card-hover p-6 cursor-pointer hover:bg-white hover:text-black transition" onclick="location.href='employee_performance.html'">
+        <h3 class="text-2xl font-bold mb-2">📊 Employee Performance</h3>
+        <p>Track efficiency, engagement, and productivity with visual dashboards.</p>
+      </div>
+      <div class="glass card-hover p-6 cursor-pointer hover:bg-white hover:text-black transition" onclick="location.href='demand_prediction.html'">
+        <h3 class="text-2xl font-bold mb-2">📈 Demand Prediction</h3>
+        <p>Predict sales trends and optimize inventory with AI-driven demand forecasting.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 bg-black text-white">
+    <p>&copy; 2025 Billiance. Powered by Innovation 🚀</p>
+  </footer>
+
+</body>
+</html>

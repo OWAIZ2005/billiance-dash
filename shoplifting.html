@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoplifting Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.37);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .btn-primary {
+            background-color: #ec4899;
+            transition: background 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #db2777;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="container mx-auto p-6 glass mt-6">
+        <nav class="flex justify-around bg-transparent text-white py-4 glass">
+            <a href="#" class="hover:text-gray-300">Home</a>
+            <a href="#reports" class="hover:text-gray-300">Reports</a>
+            <a href="#alerts" class="hover:text-gray-300">Alerts</a>
+            <a href="#settings" class="hover:text-gray-300">Settings</a>
+        </nav>
+        
+        <h2 class="text-2xl font-bold text-center my-4">Shoplifting Monitoring Dashboard</h2>
+        
+        <label for="timeframe" class="block text-center text-lg font-medium">Select Timeframe:</label>
+        <select id="timeframe" onchange="updateCharts()" class="block mx-auto mt-2 p-2 border border-gray-300 rounded-md text-black">
+            <option value="daily">Daily</option>
+            <option value="monthly">Monthly</option>
+            <option value="six_months">Six Months</option>
+        </select>
+
+        <div class="flex flex-wrap justify-center gap-6 mt-6">
+            <div class="glass w-1/2 min-w-[300px]">
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="glass w-1/2 min-w-[300px]">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass mt-6 text-center" id="summary"></div>
+        
+        <div class="flex justify-center items-center mt-6">
+            <button class="btn-primary text-white py-2 px-4 rounded-lg shadow-md" onclick="downloadReport()">Download Report</button>
+        </div>
+        
+        <div class="flex justify-center items-center mt-6">
+            <div id="animation" class="w-40 h-40"></div>
+        </div>
+    </div>
+
+    <script>
+        let barChart, pieChart;
+        function createCharts(timeframe) {
+            const ctx1 = document.getElementById('barChart').getContext('2d');
+            const ctx2 = document.getElementById('pieChart').getContext('2d');
+            
+            const dataSets = {
+                daily: [3, 5, 7, 12, 6, 9, 4],
+                monthly: [60, 55, 85, 45, 95, 70],
+                six_months: [220, 260, 190, 310, 230, 280]
+            };
+            const categories = {
+                daily: [25, 35, 20, 20],
+                monthly: [300, 400, 250, 200],
+                six_months: [1200, 1400, 900, 700]
+            };
+            
+            if (barChart) barChart.destroy();
+            if (pieChart) pieChart.destroy();
+
+            barChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"],
+                    datasets: [{
+                        label: 'Shoplifting Cases',
+                        data: dataSets[timeframe],
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                    }]
+                }
+            });
+
+            pieChart = new Chart(ctx2, {
+                type: 'pie',
+                data: {
+                    labels: ['Electronics', 'Clothing', 'Groceries', 'Cosmetics'],
+                    datasets: [{
+                        data: categories[timeframe],
+                        backgroundColor: ['red', 'blue', 'green', 'orange']
+                    }]
+                }
+            });
+            updateSummary(timeframe);
+        }
+        
+        function updateSummary(timeframe) {
+            const summaries = {
+                daily: 'Today, there have been multiple shoplifting cases reported.',
+                monthly: 'This month shows an increasing trend in shoplifting.',
+                six_months: 'Over the last six months, shoplifting incidents have increased significantly.'
+            };
+            document.getElementById('summary').innerText = summaries[timeframe];
+        }
+
+        function updateCharts() {
+            let timeframe = document.getElementById('timeframe').value;
+            createCharts(timeframe);
+        }
+
+        function downloadReport() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Shoplifting Report", 10, 10);
+            doc.text(document.getElementById("summary").innerText, 10, 20);
+            doc.save("Shoplifting_Report.pdf");
+        }
+
+        window.onload = () => {
+            createCharts('daily');
+            lottie.loadAnimation({
+                container: document.getElementById('animation'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'https://assets7.lottiefiles.com/packages/lf20_j3gmpxsa.json'
+            });
+        };
+    </script>
+</body>
+</html>

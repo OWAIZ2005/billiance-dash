@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Billiance Retail Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Futuristic Gradient Background */
+        body {
+            font-family: 'League Spartan', sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        /* Navbar */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Card Container */
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px;
+            gap: 20px;
+        }
+        
+        /* Glassmorphic Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.37);
+            width: 30%;
+            min-width: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* List Styles */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Input & Button Styles */
+        input[type="file"], input[type="text"], button {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+        
+        button {
+            background: #ec4899;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #db2777;
+        }
+        
+        /* Image Preview */
+        #posterPreview img {
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+        
+        /* Send Button */
+        .send-btn {
+            display: block;
+            width: 90%;
+            background: #db2777;
+            margin-top: 10px;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .send-btn:hover {
+            background: #ec4899;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Billiance Retail Dashboard</h1>
+    </header>
+    <section class="container">
+        <div class="card poster-upload">
+            <h2>Upload Slashed Price Poster</h2>
+            <input type="file" id="posterInput" accept="image/*">
+            <div id="posterPreview"></div>
+            <button class="send-btn">Send</button>
+        </div>
+        <div class="card recommendations">
+            <h2>Personalized Recommendations</h2>
+            <ul id="recommendationList">
+                <li>Fresh Apples - 20% Off</li>
+                <li>Organic Milk - Buy 1 Get 1 Free</li>
+                <li>Whole Wheat Bread - Special Price</li>
+            </ul>
+        </div>
+    </section>
+    <script>
+        document.getElementById('posterInput').addEventListener('change', function(event) {
+            const preview = document.getElementById('posterPreview');
+            preview.innerHTML = '';
+            const file = event.target.files[0];
+            if (file) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.classList.add('poster-img');
+                preview.appendChild(img);
+            }
+        });
+    </script>
+</body>
+</html>
